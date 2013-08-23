@@ -36,7 +36,7 @@
             // Check the collision, if it's the Tower, you win!
             if(collision.obj.isA("Tower")) {
               // Stage the endGame scene above the current stage
-              Q.stageScene("endGame",1, { label: "You Won!" }); 
+              Q.stageScene("proxGame",1, { label: "You Won!" }); 
               // Remove the player to prevent them from moving
               this.destroy();
             }
@@ -76,7 +76,6 @@
               this.destroy();
               collision.obj.p.vy = -300;
               total_points = total_points + 10;
-              console.log(total_points);
             }
           });
         }
@@ -88,6 +87,29 @@
         // Add in a tile layer, and make it the collision layer
         stage.collisionLayer(new Q.TileLayer({
                                    dataAsset: 'level.json',
+                                   sheet:     'tiles' }));
+                                   
+        // Create the player and add him to the stage
+        var player = stage.insert(new Q.Player());
+        
+        // Give the stage a moveable viewport and tell it
+        // to follow the player.
+        stage.add("viewport").follow(player);
+        
+        // Add in a couple of enemies
+        stage.insert(new Q.Enemy({ x: 700, y: 0 }));
+        stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+        
+        // Finally add in the tower goal
+        stage.insert(new Q.Tower({ x: 180, y: 50 }));
+      });
+
+       // Create a new scene called level 2
+      Q.scene("level2",function(stage) {
+
+        // Add in a tile layer, and make it the collision layer
+        stage.collisionLayer(new Q.TileLayer({
+                                   dataAsset: 'level2.json',
                                    sheet:     'tiles' }));
                                    
         // Create the player and add him to the stage
@@ -130,7 +152,27 @@
         container.fit(20);
       });
 
-      Q.load("sprites.png, sprites.json, level.json, tiles.png",
+      Q.scene('proxGame',function(stage) {
+        var container = stage.insert(new Q.UI.Container({
+          x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+        }));
+        
+        var button = container.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
+                                                        label: "Next level" }))         
+        var label = container.insert(new Q.UI.Text({x:10, y: -10 - button.p.h, 
+                                                         label: stage.options.label }));
+        // When the button is clicked, clear all the stages
+        // and restart the game.
+        button.on("click",function() {
+          Q.clearStages();
+          Q.stageScene('level2');
+        });
+        
+        // Expand the container to visibily fit it's contents
+        container.fit(20);
+      });
+
+      Q.load("sprites.png, sprites.json, level.json, level2.json, tiles.png",
       // The callback will be triggered when everything is loaded
       function() {
         // Sprites sheets can be created manually
