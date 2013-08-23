@@ -6,7 +6,7 @@
   </head>
    <body>
      <script>
-     
+     var total_points = 0;
       // Now set up your game (most games will load a separate .js file)
       var Q = Quintus()                          // Create a new engine instance
               .include("Sprites, Scenes, Input, 2D, Touch, UI") // Load any needed modules
@@ -75,6 +75,8 @@
             if(collision.obj.isA("Player")) { 
               this.destroy();
               collision.obj.p.vy = -300;
+              total_points = total_points + 10;
+              console.log(total_points);
             }
           });
         }
@@ -98,6 +100,8 @@
         // Add in a couple of enemies
         stage.insert(new Q.Enemy({ x: 700, y: 0 }));
         stage.insert(new Q.Enemy({ x: 800, y: 0 }));
+        stage.insert(new Q.Enemy({ x: 600, y: 0 }));
+        stage.insert(new Q.Enemy({ x: 500, y: 0 }));
         
         // Finally add in the tower goal
         stage.insert(new Q.Tower({ x: 180, y: 50 }));
