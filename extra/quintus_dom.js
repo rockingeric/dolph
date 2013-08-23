@@ -23,7 +23,7 @@ Quintus.DOM = function(Q) {
                  .parent()
                  .css({ width: Q.el.width(),
                         height: Q.el.height(),
-                        margin: '0 auto' });
+                        margin: '150px auto' });
     Q.el.css({ position:'relative', overflow: 'hidden' });
     Q.width = Q.el.width();
     Q.height = Q.el.height();
