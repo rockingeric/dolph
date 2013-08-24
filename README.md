@@ -9,4 +9,6 @@ Install [NodeJS](http://nodejs.org/download/ "NodeJS"). And after that run the f
     $ npm install -g grunt-cli
     $ npm install
     $ grunt
+    $ node server.js
 ```
+####We hope you have fun ####
