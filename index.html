@@ -12,11 +12,35 @@
      var total_points = 0;
       // Now set up your game (most games will load a separate .js file)
       var Q = Quintus({ development: true })                          // Create a new engine instance
-              .include("Sprites, Scenes, Input, 2D, Touch, UI") // Load any needed modules
+              .include("Sprites, Scenes, Anim, Input, 2D, Touch, UI, Audio") // Load any needed modules
               .setup({width:800})                           // Add a canvas element onto the page
               .controls()                        // Add in default controls (keyboard, buttons)
               .touch();                          // Add in touch support (for the UI)
-              
+
+      Q.component("pistol", {
+        added: function() {
+          // Start the ammo out 1/2 filled
+          this.entity.p.ammo = 30;
+        },
+
+        refillAmmo: function() {
+          // We need to say this.entity because refillAmmo is 
+          // added on the component
+          this.entity.p.ammo = 60;
+        },
+
+        extend: {
+          fire: function() {
+            // We can use this.p to set properties
+            // because fire is called directly on the player
+            if(this.p.ammo > 0) {
+              this.p.ammo-=1;
+              console.log("Fire!");
+            }
+          }      
+        }
+      });
+
       // You can create a sub-class by extending the Q.Sprite class to create Q.Player
       Q.Sprite.extend("Player",{
 
@@ -31,28 +55,46 @@
             x: 410,           // You can also set additional properties that can
             y: 150            // be overridden on object creation
           });
+
+          Q.input.on("fire",this,"fireWeapon");
+          Q.input.on("refill",this,"reloadWeapon");
           
           // Add in pre-made components to get up and running quickly
           this.add('2d, platformerControls');
-          
+          this.add("pistol");
           // Write event handlers to respond hook into behaviors.
           // hit.sprite is called everytime the player collides with a sprite
+          
           this.on("hit.sprite",function(collision) {
             // Check the collision, if it's the Tower, you win!
             if(collision.obj.isA("Tower")) {
+              /*BLOCO ABAIXO FAZ O SPRITE RECARREGAR A ARMA E LOGO APÓS SOME*/
+              /*var tower = collision.obj;
+              this.pistol.refillAmmo();
+              console.log("refillAmmo");
+              tower.destroy();*/
+
               // Stage the endGame scene above the current stage
               Q.stageScene("proxGame",1, { label: "Você engordou! :D" }); 
               // Remove the player to prevent them from moving
               this.destroy();
             }
           });
+        },
+        fireWeapon: function() {
+            this.fire();
+        },
+        reloadWeapon: function() {
+            this.pistol.refillAmmo();
         }
+        
       });
+
 
       // Sprites can be simple, the Tower sprite just sets a custom sprite sheet
       Q.Sprite.extend("Tower", {
         init: function(p) {
-          this._super(p, { sheet: 'tower' });
+          this._super(p, { sheet: 'tower'});
         }
       });
 
@@ -107,6 +149,7 @@
                                    
         // Create the player and add him to the stage
         var player = stage.insert(new Q.Player());
+        //var hitPoints = player.hitPoints;
 
         Q.state.reset({ score: 0, lives: 2 });
 
