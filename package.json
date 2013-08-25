@@ -1,25 +1,16 @@
 {
   "name": "Quintus",
-  "homepage": "http://html5quintus.com",
+  "homepage": "http://interaktiv.com.br",
   "author": {
-    "name": "Pascal Rettig",
-    "email": "html5game@cykod.com"
+    "name": "Eric Martins, Guilherme Gralho, Michel Kirillov",
+    "email": "3ricm2@gmail.com"
   },
   "repository": {
     "type" : "git",
-    "url": "git://github.com/cykod/Quintus"
+    "url": "git://github.com/rockingeric/dolph.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/cykod/Quintus/blob/master/MIT-LICENSE.txt"
-    },
-    {
-      "type": "GPLv2",
-      "url": "https://github.com/cykod/Quintus/blob/master/GPL-LICENSE.txt"
-    }
-  ],
-  "version": "0.1.5",
+  "licenses": [],
+  "version": "0.1.0",
   "dependencies": {
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
@@ -34,7 +25,6 @@
     "grunt-shell": "~0.3.1",
     "temporary": "~0.0.5",
     "jade": "~0.34.1",
-    "stylus": "~0.36.0",
-    "aws-sdk": "1.4.1"
+    "stylus": "~0.36.0"
   }
 }
