@@ -13,6 +13,8 @@
               .setup()                           // Add a canvas element onto the page
               .controls()                        // Add in default controls (keyboard, buttons)
               .touch();                          // Add in touch support (for the UI)
+
+
               
       // You can create a sub-class by extending the Q.Sprite class to create Q.Player
       Q.Sprite.extend("Player",{
@@ -23,6 +25,8 @@
           // You can call the parent's constructor with this._super(..)
           this._super(p, {
             sheet: "player",  // Setting a sprite sheet sets sprite width and height
+            hitPoints: 50,
+            damage: 5,
             x: 410,           // You can also set additional properties that can
             y: 150            // be overridden on object creation
           });
@@ -54,7 +58,11 @@
       // Create the Enemy class to add in some baddies
       Q.Sprite.extend("Enemy",{
         init: function(p) {
-          this._super(p, { sheet: 'enemy', vx: 100 });
+          this._super(p, {
+                          sheet: 'enemy',
+                          damage: 10,
+                          vx: 100
+                        });
           
           // Enemies use the Bounce AI to change direction 
           // whenver they run into something.
@@ -65,7 +73,7 @@
           this.on("bump.left,bump.right,bump.bottom",function(collision) {
             if(collision.obj.isA("Player")) { 
               Q.stageScene("endGame",1, { label: "You Died" }); 
-              collision.obj.destroy();
+                collision.obj.destroy();
             }
           });
           
@@ -80,6 +88,8 @@
           });
         }
       });
+
+      
 
       // Create a new scene called level 1
       Q.scene("level1",function(stage) {
