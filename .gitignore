@@ -1,7 +1,8 @@
 *.swp
 node_modules/
 .DS_Store
-dist/
 docs/
+dist/setup.js
+dist/setup.min.js
 bin/
 s3.json
