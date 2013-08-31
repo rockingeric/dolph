@@ -7,7 +7,7 @@ Dolph HTML5 Canvas Game
 Install [NodeJS](http://nodejs.org/download/ "NodeJS"). And after that run the following commands :
 ```
     $ cd GAME_PATH
-    $ npm install -g grunt-cli
+    # npm install -g grunt-cli
     $ npm install
 ```
 where `GAME_PATH` is the folder where the game is located. e.g. /Users/awesomeuser/dolph
